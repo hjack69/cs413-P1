@@ -90,11 +90,11 @@ function Paddle() {
                 var angle = 90;
                 if (ball.x < this.x+(this.width/2)) {
                     angle = Math.abs(90 - (this.x+(this.width/2)-ball.x));
-                    ball_dx = -3*Math.cos(angle);
+                    ball_dx = -3*Math.abs(Math.cos(angle));
                 }
                 else {
                     angle = Math.abs(90 - ball.x-(this.x+(this.width/2)));
-                    ball_dx = 3*Math.cos(angle);
+                    ball_dx = 3*Math.abs(Math.cos(angle));
                 }
                 ball_dy = -Math.abs(3*Math.sin(angle));
             }
@@ -129,7 +129,7 @@ function Brick(x, y) {
                 else {
                     angle = Math.abs(90 - ball.x-(this.x+(this.width/2)));
                 }
-                ball_dx = (ball_dx/Math.abs(ball_dx))*3*Math.cos(angle);
+                ball_dx = (ball_dx/Math.abs(ball_dx))*Math.abs(3*Math.cos(angle));
                 ball_dy = (-ball_dy/Math.abs(ball_dy))*Math.abs(3*Math.sin(angle));
             }
             bricks.splice(bricks.indexOf(this), 1);
@@ -151,9 +151,9 @@ function Brick(x, y) {
 function newBricks() {
     var x = 75;
     var y = 50;
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 42; i++) {
         bricks.push(new Brick(x, y));
-        x += 35;
+        x += 45;
         if (x > WIDTH-75) {
             x = 75;
             y += 35;
