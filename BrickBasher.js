@@ -116,13 +116,25 @@ function Brick(x, y) {
         graphics.endFill();
     };
     this.collide = function(ball) {
-        if (ball.x > this.x && ball.x < this.x+this.width) {
-            if (ball.y > this.y && ball.y < this.y+this.height) {
-                ball_dy = -ball_dy;
-                bricks.splice(bricks.indexOf(this), 1);
-                if (bricks.length == 0) {
-                    newBricks();
+        if (ball.x+ball.radius > this.x && ball.x-ball.radius < this.x+this.width && ball.y+ball.radius > this.y && ball.y-ball.radius < this.y+this.height) {
+            if (ball.x == this.x + this.width/2) {
+                ball_dy = -3;
+                ball_dx = 0;
+            }
+            else {
+                var angle = 90;
+                if (ball.x < this.x+(this.width/2)) {
+                    angle = Math.abs(90 - (this.x+(this.width/2)-ball.x));
                 }
+                else {
+                    angle = Math.abs(90 - ball.x-(this.x+(this.width/2)));
+                }
+                ball_dx = (ball_dx/Math.abs(ball_dx))*3*Math.cos(angle);
+                ball_dy = (-ball_dy/Math.abs(ball_dy))*Math.abs(3*Math.sin(angle));
+            }
+            bricks.splice(bricks.indexOf(this), 1);
+            if (bricks.length == 0) {
+                newBricks();
             }
         }
     };
